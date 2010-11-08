@@ -1,0 +1,13 @@
+syntax: regexp
+
+^buildbot/
+^buildbot-configs/
+^buildbotcustom/
+/public_html/
+^sandbox/
+/test-masters/
+/info/
+\.pyc$
+\.log(\.\d+)?$
+state\.sqlite
+twistd\.pid
