@@ -84,7 +84,6 @@ class PPBuildFactory(BuildFactory):
     def __init__(self, hgHost, **kwargs):
         self.parent_class = BuildFactory
         self.parent_class.__init__(self, **kwargs)
-        #self.addFactoryArguments(hgHost=hgHost)
         self.hgHost = hgHost
         self.addStep(SetProperty(name='set_topdir',
                                  command=['pwd'],
@@ -143,7 +142,8 @@ class PPBuildFactory(BuildFactory):
         self.addStep(ShellCommand(name='test_masters',
                                   command=['./test-masters.sh', '-8'],
                                   env = {
-                                      'PYTHONPATH': WithProperties('%(topdir)s'),
+                                      'PYTHONPATH':
+                                      WithProperties('%(topdir)s:%(topdir)s/tools/lib/python'),
                                       'PATH': WithProperties('%(topdir)s/sandbox/bin:/bin:/usr/bin'),
                                   },
                                   workdir="buildbot-configs",
