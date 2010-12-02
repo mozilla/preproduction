@@ -3,7 +3,6 @@ import textwrap
 from buildbot.process.factory import BuildFactory
 from buildbot.steps.python_twisted import RemovePYCs
 from buildbot.steps.shell import ShellCommand, SetProperty
-from buildbot.steps.subunit import SubunitShellCommand
 from buildbot.process.properties import WithProperties
 from buildbot.steps.python import PyLint
 from buildbot.steps.master import MasterShellCommand
@@ -182,7 +181,7 @@ class PPBuildFactory(BuildFactory):
                     ))
 
     def tools_run_tests(self):
-        self.addStep(SubunitShellCommand(
+        self.addStep(ShellCommand(
             workdir='tools/release/signing',
             command=['python', 'tests.py'],
             flunkOnFailure=False,
@@ -195,7 +194,7 @@ class PPBuildFactory(BuildFactory):
             name='run_lib_nosetests',
             command=['nosetests'],
         ))
-        self.addStep(SubunitShellCommand(
+        self.addStep(ShellCommand(
             workdir='tools/clobberer',
             flunkOnFailure=False,
             name='run_clobbberer_test',
