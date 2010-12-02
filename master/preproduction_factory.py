@@ -190,7 +190,6 @@ class PPBuildFactory(BuildFactory):
         self.addStep(ShellCommand(
             workdir='tools/lib/python',
             env={'PYTHONPATH': WithProperties('%(topdir)s/tools/lib/python')},
-            flunkOnFailure=False,
             name='run_lib_nosetests',
             command=['nosetests'],
         ))
