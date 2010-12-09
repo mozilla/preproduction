@@ -32,6 +32,7 @@ $PYTHON -c 'import sqlite3, sys; assert sys.version_info >= (2,6)' 2>/dev/null  
 ./bin/pip install mysql-python || exit 1;
 ./bin/pip install mercurial || exit 1;
 ./bin/pip install pyopenssl==0.10 || exit 1;
+./bin/pip install http://hg.mozilla.org/users/clegnitto_mozilla.com/mozillapulse/archive/tip.tar.bz2 || exit 1;
 hg clone http://hg.mozilla.org/build/buildbot
 (cd buildbot/master; $PYTHON setup.py develop install) || exit 1;
 (cd buildbot/slave; $PYTHON setup.py develop install) || exit 1;
