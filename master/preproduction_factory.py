@@ -185,7 +185,6 @@ class PPBuildFactory(BuildFactory):
         self.addStep(ShellCommand(
             workdir='tools/release/signing',
             command=['python', 'tests.py'],
-            flunkOnFailure=False,
             name='release_signing_tests',
         ))
         self.addStep(ShellCommand(
