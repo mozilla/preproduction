@@ -1,7 +1,6 @@
 import re
 import textwrap
 from buildbot.process.factory import BuildFactory
-from buildbot.steps.python_twisted import RemovePYCs
 from buildbot.steps.shell import ShellCommand, SetProperty
 from buildbot.process.properties import WithProperties
 from buildbot.steps.python import PyLint
@@ -63,7 +62,7 @@ class PPBuildFactory(BuildFactory):
                 $PYTHON -c 'import sqlite3, sys; assert sys.version_info >= (2,6)' 2>/dev/null \
                     || $PYTHON -c 'import pysqlite2.dbapi2' || \
                     ./bin/pip install pysqlite || exit 1;
-                ./bin/pip install Twisted || exit 1;
+                ./bin/pip install Twisted==10.1.0 || exit 1;
                 ./bin/pip install jinja2 || exit 1;
                 ./bin/pip install mock || exit 1;
                 ./bin/pip install coverage || exit 1;
@@ -92,7 +91,11 @@ class PPBuildFactory(BuildFactory):
                                  property='topdir',
                                  workdir='.',
                     ))
-        self.addStep(RemovePYCs(workdir="."))
+        self.addStep(ShellCommand(
+            name='rm_pyc',
+            command=['find', '.', '-name', '*.pyc', '-exec', 'rm', '-fv', '{}', ';'],
+            workdir=".",
+        ))
 
     def update_repo(self, repo, branch):
         workdir = repo.split("/")[-1]
