@@ -198,7 +198,6 @@ class PPBuildFactory(BuildFactory):
         ))
         self.addStep(ShellCommand(
             workdir='tools/clobberer',
-            flunkOnFailure=False,
             name='run_clobbberer_test',
             command=['python', 'test_clobberer.py',
                      'http://preproduction-master.build.mozilla.org/~cltbld/index.php',
