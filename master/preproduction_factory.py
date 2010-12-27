@@ -179,7 +179,6 @@ class PPBuildFactory(BuildFactory):
                             workdir="tools",
                             env = {'PYTHONPATH':
                                    WithProperties('%(topdir)s:%(topdir)s/tools/lib/python')},
-                            flunkOnFailure=False,
                             name='tools_scripts_pylint',
                             project='tools_scripts',
                     ))
