@@ -223,6 +223,7 @@ class PPBuildFactory(BuildFactory):
                                   WithProperties('--omit="%(topdir)s/sandbox/*,/usr/*,/tools/*,*/test/*"'),
                                   '../sandbox/bin/nosetests'],
                          workdir=project,
+                         env={'PYTHONPATH': WithProperties('%(topdir)s/tools/lib/python')},
                          flunkOnFailure=False,
                     ))
         self.addStep(
