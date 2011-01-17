@@ -75,6 +75,7 @@ class PPBuildFactory(BuildFactory):
                 ./bin/pip install pyasn1 || exit 1;
                 ./bin/pip install mysql-python || exit 1;
                 ./bin/pip install pyopenssl==0.10 || exit 1;
+                ./bin/pip install mock || exit 1;
                 ./bin/pip install http://hg.mozilla.org/users/clegnitto_mozilla.com/mozillapulse/archive/7d9c018821ac.tar.bz2 || exit 1;
                 hg clone http://hg.mozilla.org/build/buildbot
                 (cd buildbot/master; $PYTHON setup.py develop install) || exit 1;
@@ -156,6 +157,8 @@ class PPBuildFactory(BuildFactory):
                                      '--rcfile=buildbotcustom/.pylintrc',
                                      'buildbotcustom'],
                             workdir='.',
+                            env = {'PYTHONPATH':
+                                   WithProperties('%(topdir)s/tools/lib/python')},
                             flunkOnFailure=False,
                             name='buildbotcustom_pylint',
                             project='buildbotcustom',
@@ -193,15 +196,24 @@ class PPBuildFactory(BuildFactory):
         self.addStep(ShellCommand(
             workdir='tools/lib/python',
             env={'PYTHONPATH': WithProperties('%(topdir)s/tools/lib/python')},
-            name='run_lib_nosetests',
+            name='tools_lib_nosetests',
             command=['nosetests'],
         ))
         self.addStep(ShellCommand(
             workdir='tools/clobberer',
-            name='run_clobbberer_test',
+            name='clobbberer_test',
             command=['python', 'test_clobberer.py',
                      'http://preproduction-master.build.mozilla.org/~cltbld/index.php',
                      '/home/cltbld/public_html/db/clobberer.db'],
+        ))
+
+    def bbc_run_tests(self):
+        self.addStep(ShellCommand(
+            workdir='buildbotcustom',
+            command=['nosetests'],
+            env={'PYTHONPATH': WithProperties('%(topdir)s/tools/lib/python')},
+            name='buildbotcustom_tests',
+            flunkOnFailure=False,
         ))
 
     def run_on_master(self, master_dir, cmd):
