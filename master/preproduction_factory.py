@@ -213,7 +213,6 @@ class PPBuildFactory(BuildFactory):
             command=['nosetests'],
             env={'PYTHONPATH': WithProperties('%(topdir)s/tools/lib/python')},
             name='buildbotcustom_tests',
-            flunkOnFailure=False,
         ))
 
     def run_on_master(self, master_dir, cmd):
