@@ -61,7 +61,7 @@ class PPBuildFactory(BuildFactory):
                     ./bin/pip install simplejson || exit 1
                 $PYTHON -c 'import sqlite3, sys; assert sys.version_info >= (2,6)' 2>/dev/null \
                     || $PYTHON -c 'import pysqlite2.dbapi2' || \
-                    ./bin/pip install pysqlite || exit 1;
+                    ./bin/pip install pysqlite==2.6.0 || exit 1;
                 ./bin/pip install Twisted==10.1.0 || exit 1;
                 ./bin/pip install jinja2 || exit 1;
                 ./bin/pip install mock || exit 1;
