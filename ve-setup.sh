@@ -10,14 +10,13 @@ mkdir -p $PIP_DOWNLOAD_CACHE
 VE_VER=1.4.9
 wget -O- http://pypi.python.org/packages/source/v/virtualenv/virtualenv-${VE_VER}.tar.gz | tar -xz  virtualenv-${VE_VER}/virtualenv.py || exit 1
 
-PYTHON=/tools/python/bin/python
 PYTHON=python
 $PYTHON virtualenv-${VE_VER}/virtualenv.py --distribute --no-site-packages . || exit 1
 rm -rf virtualenv-${VE_VER}
 PYTHON=$PWD/bin/python
 PATH=$PWD/bin:$PATH
-$PYTHON -c 'import json' 2>/dev/null ||                     $PYTHON -c 'import  simplejson' ||                     ./bin/pip install simplejson || exit 1
-$PYTHON -c 'import sqlite3, sys; assert sys.version_info >= (2,6)' 2>/dev/null || $PYTHON -c 'import pysqlite2.dbapi2' || ./bin/pip install pysqlitei==2.6.0 || exit 1;
+$PYTHON -c 'import json' 2>/dev/null || $PYTHON -c 'import  simplejson' || ./bin/pip install simplejson || exit 1
+$PYTHON -c 'import sqlite3, sys; assert sys.version_info >= (2,6)' 2>/dev/null || $PYTHON -c 'import pysqlite2.dbapi2' || ./bin/pip install pysqlite==2.6.0 || exit 1;
 ./bin/pip install Twisted==10.1.0 || exit 1;
 ./bin/pip install jinja2 || exit 1;
 ./bin/pip install mock || exit 1;
