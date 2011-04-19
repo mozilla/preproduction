@@ -60,7 +60,7 @@ class PPBuildFactory(BuildFactory):
             workdir=".",
         ))
 
-    def update_repo(self, repo, branch):
+    def update_repo(self, repo, branch='default'):
         workdir = repo.split("/")[-1]
         repourl = 'http://%s/%s' % (self.hgHost, repo)
         self.addStep(ShellCommand(
@@ -87,6 +87,7 @@ class PPBuildFactory(BuildFactory):
                      'buildbot-configs'],
             workdir=WithProperties(workdir),
         ))
+        self.update_repo('build/buildbot-configs')
         self.addStep(ShellCommand(
             name='setup_sandbox',
             command=['make', '-f', 'Makefile.setup',
