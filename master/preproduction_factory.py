@@ -221,7 +221,7 @@ class PPBuildFactory(BuildFactory):
         self.addStep(ShellCommand(
             name='upload_coverage_html_%s' % project,
             command=['rsync', '-av', '--delete', '-e',
-                     'ssh -i ~/.ssh/id_rsa -l cltbld -o BatchMode=yes',
+                     'ssh -o IdentityFile=~/.ssh/id_rsa -l cltbld -o BatchMode=yes',
                      'html/%s/' % project,
                      'preproduction-stage.build.mozilla.org:/var/www/html/coverage/%s/' % project],
             workdir='.',
