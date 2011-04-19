@@ -1,7 +1,6 @@
 # -*- makefile -*-
 
 export PATH=$(shell pwd)/../sandbox/bin:/bin:/usr/bin
-export PYTHONPATH=$(shell pwd)/..
 
 start:
 	buildbot start .

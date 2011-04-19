@@ -1,39 +1,30 @@
 #!/bin/sh
+# Example usage $0 /full/path/to/base/dir
 
-mkdir -p sandbox
-cd sandbox
-rm -rf bin lib include
+BASEDIR=$1
+VIRTUALENV=$(ls /tools/python/bin/virtualenv 2>/dev/null || which virtualenv)
+PYTHON=$(ls /tools/python/bin/python 2>/dev/null || which python)
+HG=$(ls /tools/python/bin/hg 2>/dev/null || which hg)
+
 unset CC
 unset CXX
-export PIP_DOWNLOAD_CACHE=$PWD/cache
+export PIP_DOWNLOAD_CACHE=$BASEDIR/cache
 mkdir -p $PIP_DOWNLOAD_CACHE
-VE_VER=1.4.9
-wget -O- http://pypi.python.org/packages/source/v/virtualenv/virtualenv-${VE_VER}.tar.gz | tar -xz  virtualenv-${VE_VER}/virtualenv.py || exit 1
 
-PYTHON=python
-$PYTHON virtualenv-${VE_VER}/virtualenv.py --distribute --no-site-packages . || exit 1
-rm -rf virtualenv-${VE_VER}
-PYTHON=$PWD/bin/python
-PATH=$PWD/bin:$PATH
-$PYTHON -c 'import json' 2>/dev/null || $PYTHON -c 'import  simplejson' || ./bin/pip install simplejson || exit 1
-$PYTHON -c 'import sqlite3, sys; assert sys.version_info >= (2,6)' 2>/dev/null || $PYTHON -c 'import pysqlite2.dbapi2' || ./bin/pip install pysqlite==2.6.0 || exit 1;
-./bin/pip install Twisted==10.1.0 || exit 1;
-./bin/pip install jinja2 || exit 1;
-./bin/pip install mock || exit 1;
-./bin/pip install coverage || exit 1;
-./bin/pip install nose || exit 1;
-./bin/pip install pylint || exit 1;
-./bin/pip install sqlalchemy || exit 1;
-./bin/pip install argparse || exit 1;
-./bin/pip install django || exit 1;
-./bin/pip install pycrypto || exit 1;
-./bin/pip install pyasn1 || exit 1;
-./bin/pip install mysql-python || exit 1;
-./bin/pip install mercurial || exit 1;
-./bin/pip install pyopenssl==0.10 || exit 1;
-./bin/pip install mock || exit 1;
-./bin/pip install http://hg.mozilla.org/users/clegnitto_mozilla.com/mozillapulse/archive/tip.tar.bz2 || exit 1;
-hg clone http://hg.mozilla.org/build/buildbot
-(cd buildbot/master; $PYTHON setup.py develop install) || exit 1;
-(cd buildbot/slave; $PYTHON setup.py develop install) || exit 1;
-rm -rf buildbot
+rm -rf $BASEDIR/buildbot
+rm -rf $BASEDIR/buildbotcustom
+rm -rf $BASEDIR/tools
+rm -rf $BASEDIR/buildbot-configs
+make \
+    BASEDIR=$BASEDIR \
+    VIRTUALENV=$VIRTUALENV \
+    PYTHON=$PYTHON \
+    HG=$HG \
+    MASTER_NAME=fake \
+    BUILDBOT_BRANCH=production-0.8 \
+    BUILDBOTCUSTOM_BRANCH=default \
+    BUILDBOTCONFIGS_BRANCH=default \
+    USER=$USER \
+    PIP_FLAGS="-r preproduction-pip.txt" \
+    INSTALL_BUILDBOT_SLAVE=1 \
+    -f Makefile.setup virtualenv deps install-buildbot
