@@ -172,7 +172,8 @@ class PPBuildFactory(BuildFactory):
     def bbc_run_tests(self):
         self.addStep(ShellCommand(
             workdir='buildbotcustom',
-            command=['nosetests'],
+            command=['bash', '-c',
+                     'exit=0; for f in test/*.py; do trial $f || exit=1; done; exit $exit'],
             env={'PYTHONPATH': WithProperties('%(topdir)s/tools/lib/python')},
             name='buildbotcustom_tests',
             flunkOnFailure=False,
