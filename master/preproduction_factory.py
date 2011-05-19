@@ -110,7 +110,7 @@ class PPBuildFactory(BuildFactory):
     def test_masters(self):
         self.addStep(ShellCommand(
             name='test_masters',
-            command=['./test-masters.sh', '-8'],
+            command=['./test-masters.sh'],
             env={'PATH':
                  WithProperties('%(topdir)s/sandbox/bin:/bin:/usr/bin'),
                  'PYTHONPATH':
