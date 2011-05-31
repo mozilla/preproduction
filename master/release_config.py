@@ -1,7 +1,7 @@
 rmConfig = {}
 
 # TODO: enable multiple version when we can use locales per version
-rmConfig['releaseConfigs'] = ['mozilla/release-firefox-mozilla-2.0.py']
+rmConfig['releaseConfigs'] = ['mozilla/release-firefox-mozilla-beta.py']
 rmConfig['releaseMasterDir'] = '/builds/buildbot/release-master'
 rmConfig['releaseMasterHostPort'] = 'localhost:9020'
 
