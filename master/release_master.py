@@ -130,7 +130,7 @@ class PPReleaseFactory(BuildFactory):
                          '--username', 'preproduction',
                          '--master', rmConfig['releaseMasterHostPort'],
                          '--branch', WithProperties('%(release_branch)s'),
-                         '-p', 'release_config:%s' % release_config,
+                         '-p', 'products:firefox',
                          '-p',  WithProperties(
                              'script_repo_revision:%(release_tag)s'),
                          'release_build'],
