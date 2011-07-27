@@ -179,6 +179,14 @@ class PPBuildFactory(BuildFactory):
             flunkOnFailure=False,
         ))
 
+    def config_tests(self):
+        self.addStep(ShellCommand(
+            workdir='buildbot-configs/mozilla',
+            command=['bash', '-c',
+                     'exit=0; for f in test/*.py; do trial $f || exit=1; done; exit $exit'],
+            name='config_tests',
+        ))
+
     def run_on_master(self, master_dir, cmd):
         self.addStep(MasterShellCommand(
             name='master_cmd',
