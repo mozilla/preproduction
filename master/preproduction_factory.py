@@ -184,7 +184,13 @@ class PPBuildFactory(BuildFactory):
             workdir='buildbot-configs/mozilla',
             command=['bash', '-c',
                      'exit=0; for f in test/*.py; do trial $f || exit=1; done; exit $exit'],
-            name='config_tests',
+            name='mozilla_config_tests',
+        ))
+        self.addStep(ShellCommand(
+            workdir='buildbot-configs/mozilla-tests',
+            command=['bash', '-c',
+                     'exit=0; for f in test/*.py; do trial $f || exit=1; done; exit $exit'],
+            name='mozilla-tests_config_tests',
         ))
 
     def run_on_master(self, master_dir, cmd):
