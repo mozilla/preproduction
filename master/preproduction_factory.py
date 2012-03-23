@@ -194,10 +194,11 @@ class PPBuildFactory(BuildFactory):
         ))
 
     def run_on_master(self, master_dir, cmd):
-        self.addStep(MasterShellCommand(
+        self.addStep(ShellCommand(
             name='master_cmd',
-            command='bash --login -c \'cd "%s" && %s\'' % (master_dir,
-                                                           cmd)
+            command='bash --login -c \'cd "%s" && %s\'' % (master_dir, cmd),
+            workdir=master_dir,
+            flunkOnFailure=False,
         ))
 
     def coverage(self, project):
