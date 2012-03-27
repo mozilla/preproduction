@@ -110,7 +110,10 @@ class PPBuildFactory(BuildFactory):
     def test_masters(self):
         self.addStep(ShellCommand(
             name='test_masters',
-            command=['./test-masters.sh'],
+            command=[
+                'python', 'setup-master.py', '--test', '--masters-json',
+                WithProperties('%(topdir)s/tools/buildfarm/maintenance/production-masters.json')
+            ],
             env={'PATH':
                  WithProperties('%(topdir)s/sandbox/bin:/bin:/usr/bin'),
                  'PYTHONPATH':
