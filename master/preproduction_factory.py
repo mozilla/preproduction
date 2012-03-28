@@ -112,7 +112,8 @@ class PPBuildFactory(BuildFactory):
             name='test_masters',
             command=[
                 'python', 'setup-master.py', '--test', '--masters-json',
-                WithProperties('%(topdir)s/tools/buildfarm/maintenance/production-masters.json')
+                WithProperties('%(topdir)s/tools/buildfarm/maintenance/production-masters.json'),
+                '--error-logs',
             ],
             env={'PATH':
                  WithProperties('%(topdir)s/sandbox/bin:/bin:/usr/bin'),
