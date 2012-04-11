@@ -2,8 +2,8 @@
 # Example usage $0 /full/path/to/base/dir
 
 BASEDIR=$1
-VIRTUALENV=$(ls /tools/python/bin/virtualenv 2>/dev/null || which virtualenv)
-PYTHON=$(ls /tools/python/bin/python 2>/dev/null || which python)
+VIRTUALENV=$(ls /tools/python/bin/virtualenv 2>/dev/null || which virtualenv-2.6)
+PYTHON=$(ls /tools/python/bin/python 2>/dev/null || which python2.6)
 HG=$(ls /tools/python/bin/hg 2>/dev/null || which hg)
 
 unset CC
