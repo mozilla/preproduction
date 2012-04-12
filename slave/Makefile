@@ -1,6 +1,6 @@
 # -*- makefile -*-
 
-export PATH=$(shell pwd)/../sandbox/bin:/bin:/usr/bin
+export PATH=$(shell pwd)/../sandbox_slave/bin:/bin:/usr/bin
 
 start:
 	buildslave start .

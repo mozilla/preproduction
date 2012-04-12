@@ -91,8 +91,8 @@ class PPBuildFactory(BuildFactory):
         self.addStep(ShellCommand(
             name='setup_sandbox',
             command=['make', '-f', 'Makefile.setup',
-                     'PYTHON=/tools/python/bin/python',
-                     'VIRTUALENV=/tools/python/bin/virtualenv',
+                     'PYTHON=python2.6',
+                     'VIRTUALENV=virtualenv-2.6',
                      'MASTER_NAME=fake',
                      WithProperties('BASEDIR=%s' % workdir),
                      'BUILDBOTCUSTOM_BRANCH=default',
@@ -169,7 +169,7 @@ class PPBuildFactory(BuildFactory):
             workdir='tools/clobberer',
             name='clobbberer_test',
             command=['python', 'test_clobberer.py',
-                     'http://preproduction-master.build.mozilla.org/~cltbld/index.php',
+                     'http://preproduction-master.srv.releng.scl3.mozilla.com/~cltbld/index.php',
                      '/home/cltbld/public_html/db/clobberer.db'],
         ))
 
@@ -243,6 +243,6 @@ class PPBuildFactory(BuildFactory):
             command=['rsync', '-av', '--delete', '-e',
                      'ssh -o IdentityFile=~/.ssh/id_rsa -l cltbld -o BatchMode=yes',
                      'html/%s/' % project,
-                     'preproduction-stage.build.mozilla.org:/var/www/html/coverage/%s/' % project],
+                     'preproduction-stage.srv.releng.scl3.mozilla.com:/var/www/html/coverage/%s/' % project],
             workdir='.',
         ))

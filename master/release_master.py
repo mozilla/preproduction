@@ -27,7 +27,7 @@ class PPReleaseFactory(BuildFactory):
             haltOnFailure=True,
         ))
         self.addStep(ShellCommand(
-            command=['python', 'scripts/preproduction/repo_setup.py', '-c',
+            command=[rmConfig['PYTHON'], 'scripts/preproduction/repo_setup.py', '-c',
                      'scripts/preproduction/repo_setup_config.py'],
             workdir='tools',
             haltOnFailure=True,
@@ -47,7 +47,7 @@ class PPReleaseFactory(BuildFactory):
                 and len(step.build.getProperty('previousSetupMakefile')) > 0
 
         self.addStep(ShellCommand(
-            command=['python',
+            command=[rmConfig['PYTHON'],
                      'tools/buildfarm/maintenance/buildbot-wrangler.py',
                      'stop', '%s/master' % rmConfig['releaseMasterDir']],
             workdir=rmConfig['releaseMasterDir'],
@@ -102,7 +102,7 @@ class PPReleaseFactory(BuildFactory):
             workdir='%s/master' % rmConfig['releaseMasterDir'],
         ))
         self.addStep(ShellCommand(
-            command=['python',
+            command=[rmConfig['PYTHON'],
                      'tools/buildfarm/maintenance/buildbot-wrangler.py',
                      'start', '%s/master' % rmConfig['releaseMasterDir']],
             workdir=rmConfig['releaseMasterDir'],
@@ -110,7 +110,7 @@ class PPReleaseFactory(BuildFactory):
         for release_config in rmConfig['releaseConfigs']:
             self.addStep(SetProperty(
                 property='release_tag',
-                command=['python', '-c',
+                command=[rmConfig['PYTHON'], '-c',
                          'execfile("%s"); \
                          print releaseConfig["baseTag"] + "_RELEASE"' %
                                                         release_config],
@@ -118,7 +118,7 @@ class PPReleaseFactory(BuildFactory):
             ))
             self.addStep(SetProperty(
                 property='release_branch',
-                command=['python', '-c',
+                command=[rmConfig['PYTHON'], '-c',
                          'execfile("%s"); \
                          print releaseConfig["sourceRepositories"]["mozilla"]["path"]' %
                                                             release_config],
