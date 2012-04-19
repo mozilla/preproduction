@@ -102,6 +102,13 @@ class PPReleaseFactory(BuildFactory):
             workdir='%s/master' % rmConfig['releaseMasterDir'],
         ))
         self.addStep(ShellCommand(
+            command=[
+                'bash', '-c',
+                'if [ -e ~/conf/passwords.py ]; then cp -fv ~/conf/passwords.py ./'
+            ],
+            workdir='%s/master' % rmConfig['releaseMasterDir'],
+        ))
+        self.addStep(ShellCommand(
             command=[rmConfig['PYTHON'],
                      'tools/buildfarm/maintenance/buildbot-wrangler.py',
                      'start', '%s/master' % rmConfig['releaseMasterDir']],
