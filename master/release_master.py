@@ -104,7 +104,7 @@ class PPReleaseFactory(BuildFactory):
         self.addStep(ShellCommand(
             command=[
                 'bash', '-c',
-                'if [ -e ~/conf/passwords.py ]; then cp -fv ~/conf/passwords.py ./'
+                'if [ -e ~/conf/passwords.py ]; then cp -fv ~/conf/passwords.py ./; fi'
             ],
             workdir='%s/master' % rmConfig['releaseMasterDir'],
         ))
