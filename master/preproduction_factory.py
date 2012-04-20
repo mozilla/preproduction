@@ -203,6 +203,7 @@ class PPBuildFactory(BuildFactory):
             command='bash --login -c \'cd "%s" && %s\'' % (master_dir, cmd),
             workdir=master_dir,
             flunkOnFailure=False,
+            timeout=5*60,
         ))
 
     def coverage(self, project):
