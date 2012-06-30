@@ -77,7 +77,8 @@ class PPReleaseFactory(BuildFactory):
                      'PYTHON=%s' % rmConfig['PYTHON'],
                      'VIRTUALENV=%s' % rmConfig['VIRTUALENV'],
                      'HG_DIR=%s' % rmConfig['HG_DIR'],
-                     'MASTER_NAME=%s' % rmConfig['MASTER_NAME'],
+                     'MASTER_NAME=pp-release',
+                     'MASTERS_JSON=/home/cltbld/conf/master_config.json',
                      'BASEDIR=%s' % rmConfig['releaseMasterDir'],
                      'BUILDBOTCUSTOM_BRANCH=%s' %
                         rmConfig['BUILDBOTCUSTOM_BRANCH'],
