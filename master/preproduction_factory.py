@@ -163,6 +163,7 @@ class PPBuildFactory(BuildFactory):
         self.addStep(ShellCommand(
             workdir='tools/lib/python',
             name='tools_lib_nosetests',
+            env={'PYTHONPATH': '.:vendor'},
             command=['nosetests'],
         ))
         self.addStep(ShellCommand(
