@@ -118,7 +118,7 @@ class PPBuildFactory(BuildFactory):
             env={'PATH':
                  WithProperties('%(topdir)s/sandbox/bin:/bin:/usr/bin'),
                  'PYTHONPATH':
-                 WithProperties('%(topdir)s:%(topdir)s/tools/lib/python'),
+                 WithProperties('%(topdir)s:%(topdir)s/tools/lib/python:%(topdir)s/tools/lib/python/vendor'),
                 },
             workdir="buildbot-configs",
         ))
@@ -178,7 +178,7 @@ class PPBuildFactory(BuildFactory):
             workdir='buildbotcustom',
             command=['bash', '-c',
                      'exit=0; for f in test/*.py; do trial $f || exit=1; done; exit $exit'],
-            env={'PYTHONPATH': WithProperties('%(topdir)s/tools/lib/python:%(topdir)s')},
+            env={'PYTHONPATH': WithProperties('%(topdir)s/tools/lib/python:%(topdir)s:%(topdir)s/tools/lib/python/vendor')},
             name='buildbotcustom_tests',
             flunkOnFailure=False,
         ))
@@ -219,7 +219,7 @@ class PPBuildFactory(BuildFactory):
                      WithProperties('--omit="%(topdir)s/sandbox/*,/usr/*,/tools/*,*/test/*"'),
                      '../sandbox/bin/nosetests'],
             workdir=project,
-            env={'PYTHONPATH': WithProperties('%(topdir)s/tools/lib/python')},
+            env={'PYTHONPATH': WithProperties('%(topdir)s/tools/lib/python:%(topdir)s/tools/lib/python/vendor')},
             flunkOnFailure=False,
         ))
         self.addStep(ShellCommand(
